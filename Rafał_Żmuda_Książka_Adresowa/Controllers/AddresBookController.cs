@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Rafał_Żmuda_Książka_Adresowa.Models;
 
 namespace Rafał_Żmuda_Książka_Adresowa.Controllers
 {
@@ -19,7 +20,7 @@ namespace Rafał_Żmuda_Książka_Adresowa.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddAdress([FromBody] string adress)
+        public IActionResult AddAdress([FromBody] Adress adress)
         {
             return Ok("Dodano adres: " + adress);
         }
