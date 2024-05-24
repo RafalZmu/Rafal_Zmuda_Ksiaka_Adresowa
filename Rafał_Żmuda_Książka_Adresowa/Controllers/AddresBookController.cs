@@ -29,6 +29,10 @@ namespace Rafał_Żmuda_Książka_Adresowa.Controllers
         public IActionResult GetByCity(string city)
         {
             var addresses = _addressBook.GetByCity(city);
+            if (addresses.Count() == 0)
+            {
+                return NotFound("No addresses with this city name");
+            }
             return Ok(addresses);
         }
 
