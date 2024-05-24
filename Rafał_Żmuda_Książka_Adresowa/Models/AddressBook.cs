@@ -1,4 +1,5 @@
-﻿using Rafał_Żmuda_Książka_Adresowa.Services;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Rafał_Żmuda_Książka_Adresowa.Services;
 
 namespace Rafał_Żmuda_Książka_Adresowa.Models
 {
@@ -9,7 +10,7 @@ namespace Rafał_Żmuda_Książka_Adresowa.Models
         int AddAddress(Address adress);
         List<Address> GetByCity(string city);
         Address GetLastAddress();
-        int SaveAdresses();
+        void SaveAdresses();
     }
 
     public class AddressBook : IAddressBook
@@ -32,6 +33,7 @@ namespace Rafał_Żmuda_Książka_Adresowa.Models
             {
                 return 1;
             }
+
             try
             {
                 address.CreationDate = DateTime.Now;
@@ -52,20 +54,12 @@ namespace Rafał_Żmuda_Książka_Adresowa.Models
 
         public Address GetLastAddress()
         {
-            return Addresses.OrderByDescending(Adresses => Adresses.CreationDate).FirstOrDefault() ?? new Address();
+            return Addresses.OrderByDescending(Adresses => Adresses.CreationDate).FirstOrDefault();
         }
 
-        public int SaveAdresses()
+        public void SaveAdresses()
         {
-            try
-            {
-                _dataSource.SaveAdresses(Addresses);
-                return 0;
-            }
-            catch (Exception)
-            {
-                return 1;
-            }
+            _dataSource.SaveAdresses(Addresses);
         }
     }
 }

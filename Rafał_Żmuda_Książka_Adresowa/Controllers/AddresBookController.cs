@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Rafał_Żmuda_Książka_Adresowa.Models;
+using System.Text;
 
 namespace Rafał_Żmuda_Książka_Adresowa.Controllers
 {
@@ -18,6 +19,10 @@ namespace Rafał_Żmuda_Książka_Adresowa.Controllers
         public IActionResult GetLastAdress()
         {
             var lastAddress = _addressBook.GetLastAddress();
+            if(lastAddress == null)
+            {
+                return NotFound("No addresses in address book yet");
+            }
             return Ok(lastAddress);
         }
 
