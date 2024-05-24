@@ -1,22 +1,41 @@
-﻿namespace Rafał_Żmuda_Książka_Adresowa.Models
+﻿using Rafał_Żmuda_Książka_Adresowa.Services;
+
+namespace Rafał_Żmuda_Książka_Adresowa.Models
 {
-    public class AddressBook
+    public interface IAddressBook
     {
-        public List<Adress> Adresses { get; set; } = new List<Adress>();
+        List<Adress> Addresses { get; set; }
 
+        void AddAddress(Adress adress);
+        List<Adress> GetByCity(string city);
+        Adress GetLastAddress();
+    }
 
-        public void AddAdress(Adress adress)
+    public class AddressBook : IAddressBook
+    {
+        public List<Adress> Addresses { get; set; } = [];
+
+        private IDataSource _dataSource;
+
+        public AddressBook(IDataSource dataSource)
         {
-            throw new NotImplementedException();
+            _dataSource = dataSource;
+            Addresses = _dataSource.LoadAdresses();
+        }
+
+        public void AddAddress(Adress adress)
+        {
+            Addresses.Add(adress);
+            _dataSource.SaveAdresses(Addresses);
         }
 
         public List<Adress> GetByCity(string city)
         {
-            throw new NotImplementedException();
+            return Addresses.Where(adress => adress.City == city).ToList();
         }
-        public Adress GetLastAdress()
+        public Adress GetLastAddress()
         {
-            throw new NotImplementedException();
+            return Addresses.OrderByDescending(Adresses => Adresses.CreationDate).FirstOrDefault() ?? new Adress();
         }
     }
 }

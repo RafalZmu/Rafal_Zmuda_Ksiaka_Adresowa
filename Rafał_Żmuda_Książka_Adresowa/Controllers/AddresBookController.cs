@@ -4,25 +4,35 @@ using Rafał_Żmuda_Książka_Adresowa.Models;
 
 namespace Rafał_Żmuda_Książka_Adresowa.Controllers
 {
+    [Route("[controller]")]
+    [ApiController]
     public class AddresBookController : Controller
     {
+        private readonly IAddressBook _addressBook;
+        public AddresBookController(IAddressBook adressBook)
+        {
+            _addressBook = adressBook;
+        }
 
         [HttpGet]
         public IActionResult GetLastAdress()
         {
-            return Ok("Ostatni adres");
+            var lastAddress = _addressBook.GetLastAddress();
+            return Ok(lastAddress);
         }
 
-        [HttpGet]
+        [HttpGet("ByCity")]
         public IActionResult GetByCity(string city)
         {
-            return Ok("Adresy z miasta: " + city);
+            var addresses = _addressBook.GetByCity(city);
+            return Ok(addresses);
         }
 
         [HttpPost]
-        public IActionResult AddAdress([FromBody] Adress adress)
+        public IActionResult AddAdress([FromBody] Adress address)
         {
-            return Ok("Dodano adres: " + adress);
+            _addressBook.AddAddress(address);
+            return Ok();
         }
     }
 }

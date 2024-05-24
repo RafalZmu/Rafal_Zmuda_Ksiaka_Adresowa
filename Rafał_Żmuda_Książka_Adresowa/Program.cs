@@ -1,4 +1,7 @@
 
+using Rafał_Żmuda_Książka_Adresowa.Models;
+using Rafał_Żmuda_Książka_Adresowa.Services;
+
 namespace Rafał_Żmuda_Książka_Adresowa
 {
     public class Program
@@ -8,6 +11,8 @@ namespace Rafał_Żmuda_Książka_Adresowa
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddSingleton<IAddressBook, AddressBook>();
+            builder.Services.AddSingleton<IDataSource, JsonFileService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
