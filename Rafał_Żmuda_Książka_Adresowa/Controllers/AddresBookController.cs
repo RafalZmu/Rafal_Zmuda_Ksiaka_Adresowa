@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Rafał_Żmuda_Książka_Adresowa.Models;
-using System.Text;
 
 namespace Rafał_Żmuda_Książka_Adresowa.Controllers
 {
@@ -10,6 +8,7 @@ namespace Rafał_Żmuda_Książka_Adresowa.Controllers
     public class AddresBookController : Controller
     {
         private readonly IAddressBook _addressBook;
+
         public AddresBookController(IAddressBook adressBook)
         {
             _addressBook = adressBook;
@@ -19,7 +18,7 @@ namespace Rafał_Żmuda_Książka_Adresowa.Controllers
         public IActionResult GetLastAdress()
         {
             var lastAddress = _addressBook.GetLastAddress();
-            if(lastAddress == null)
+            if (lastAddress == null)
             {
                 return NotFound("No addresses in address book yet");
             }
@@ -37,7 +36,7 @@ namespace Rafał_Żmuda_Książka_Adresowa.Controllers
         public IActionResult AddAdress([FromBody] Address address)
         {
             var result = _addressBook.AddAddress(address);
-            if(result == 1)
+            if (result == 1)
             {
                 return BadRequest();
             }

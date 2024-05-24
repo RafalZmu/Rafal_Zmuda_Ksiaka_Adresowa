@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Rafał_Żmuda_Książka_Adresowa.Services;
+﻿using Rafał_Żmuda_Książka_Adresowa.Services;
 
 namespace Rafał_Żmuda_Książka_Adresowa.Models
 {
@@ -8,8 +7,11 @@ namespace Rafał_Żmuda_Książka_Adresowa.Models
         List<Address> Addresses { get; set; }
 
         int AddAddress(Address adress);
-        List<Address> GetByCity(string city);
+
+        IEnumerable<Address> GetByCity(string city);
+
         Address GetLastAddress();
+
         void SaveAdresses();
     }
 
@@ -47,7 +49,7 @@ namespace Rafał_Żmuda_Książka_Adresowa.Models
             }
         }
 
-        public List<Address> GetByCity(string city)
+        public IEnumerable<Address> GetByCity(string city)
         {
             return Addresses.Where(adress => adress.City == city).ToList();
         }
