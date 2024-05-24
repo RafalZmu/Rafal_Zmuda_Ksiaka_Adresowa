@@ -17,16 +17,16 @@ namespace Rafał_Żmuda_Książka_Adresowa.Services
             }
         }
 
-        public void SaveAdresses(List<Adress> adresses)
+        public void SaveAdresses(List<Address> adresses)
         {
             string jsonString = JsonSerializer.Serialize(adresses);
             File.WriteAllText(_jsonFilePath, jsonString);
         }
 
-        public List<Adress> LoadAdresses()
+        public List<Address> LoadAdresses()
         {
             string jsonString = File.ReadAllText(_jsonFilePath);
-            return JsonSerializer.Deserialize<List<Adress>>(jsonString) ?? [];
+            return JsonSerializer.Deserialize<List<Address>>(jsonString) ?? [];
         }
     }
 }

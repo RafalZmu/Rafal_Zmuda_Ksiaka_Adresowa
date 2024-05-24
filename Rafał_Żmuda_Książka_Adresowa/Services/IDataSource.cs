@@ -4,7 +4,7 @@ namespace Rafał_Żmuda_Książka_Adresowa.Services
 {
     public interface IDataSource
     {
-        List<Adress> LoadAdresses();
-        void SaveAdresses(List<Adress> adresses);
+        List<Address> LoadAdresses();
+        void SaveAdresses(List<Address> adresses);
     }
 }

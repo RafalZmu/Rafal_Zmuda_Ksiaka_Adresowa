@@ -29,9 +29,13 @@ namespace Rafał_Żmuda_Książka_Adresowa.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddAdress([FromBody] Adress address)
+        public IActionResult AddAdress([FromBody] Address address)
         {
-            _addressBook.AddAddress(address);
+            var result = _addressBook.AddAddress(address);
+            if(result == 1)
+            {
+                return BadRequest();
+            }
             return Ok();
         }
     }

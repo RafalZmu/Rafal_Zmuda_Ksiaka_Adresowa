@@ -1,6 +1,7 @@
 
 using Rafał_Żmuda_Książka_Adresowa.Models;
 using Rafał_Żmuda_Książka_Adresowa.Services;
+using FluentValidation.AspNetCore;
 
 namespace Rafał_Żmuda_Książka_Adresowa
 {
@@ -14,7 +15,10 @@ namespace Rafał_Żmuda_Książka_Adresowa
             builder.Services.AddSingleton<IAddressBook, AddressBook>();
             builder.Services.AddSingleton<IDataSource, JsonFileService>();
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddressValidator>());
+
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

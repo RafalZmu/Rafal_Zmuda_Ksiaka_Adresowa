@@ -4,16 +4,17 @@ namespace Rafał_Żmuda_Książka_Adresowa.Models
 {
     public interface IAddressBook
     {
-        List<Adress> Addresses { get; set; }
+        List<Address> Addresses { get; set; }
 
-        void AddAddress(Adress adress);
-        List<Adress> GetByCity(string city);
-        Adress GetLastAddress();
+        int AddAddress(Address adress);
+        List<Address> GetByCity(string city);
+        Address GetLastAddress();
+        int SaveAdresses();
     }
 
     public class AddressBook : IAddressBook
     {
-        public List<Adress> Addresses { get; set; } = [];
+        public List<Address> Addresses { get; set; } = [];
 
         private IDataSource _dataSource;
 
@@ -23,19 +24,48 @@ namespace Rafał_Żmuda_Książka_Adresowa.Models
             Addresses = _dataSource.LoadAdresses();
         }
 
-        public void AddAddress(Adress adress)
+        public int AddAddress(Address address)
         {
-            Addresses.Add(adress);
-            _dataSource.SaveAdresses(Addresses);
+            var validator = new AddressValidator();
+            var result = validator.Validate(address);
+            if (result.IsValid == false)
+            {
+                return 1;
+            }
+            try
+            {
+                address.CreationDate = DateTime.Now;
+                Addresses.Add(address);
+                _dataSource.SaveAdresses(Addresses);
+                return 0;
+            }
+            catch (Exception)
+            {
+                return 1;
+            }
         }
 
-        public List<Adress> GetByCity(string city)
+        public List<Address> GetByCity(string city)
         {
             return Addresses.Where(adress => adress.City == city).ToList();
         }
-        public Adress GetLastAddress()
+
+        public Address GetLastAddress()
         {
-            return Addresses.OrderByDescending(Adresses => Adresses.CreationDate).FirstOrDefault() ?? new Adress();
+            return Addresses.OrderByDescending(Adresses => Adresses.CreationDate).FirstOrDefault() ?? new Address();
+        }
+
+        public int SaveAdresses()
+        {
+            try
+            {
+                _dataSource.SaveAdresses(Addresses);
+                return 0;
+            }
+            catch (Exception)
+            {
+                return 1;
+            }
         }
     }
 }

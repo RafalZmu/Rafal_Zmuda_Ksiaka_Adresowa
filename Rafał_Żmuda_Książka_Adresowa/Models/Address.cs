@@ -1,6 +1,6 @@
 ﻿namespace Rafał_Żmuda_Książka_Adresowa.Models
 {
-    public class Adress
+    public class Address
     {
         public string Name { get; set; } = string.Empty;
         public string SecondName { get; set; } = string.Empty;
